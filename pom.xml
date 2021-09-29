@@ -40,9 +40,19 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-validation</artifactId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
     </dependency>
 
 		<dependency>
@@ -54,19 +64,14 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<!-- <version>0.9.2</version>  -->
+			<!-- <version>0.9.2</version> -->
 		</dependency>
 
 	</dependencies>
 
-  <!-- comentado porque ja existe no SpringBoot
-	<repositories>
-		<repository>
-			<id>projectlombok.org</id>
-			<url>http://projectlombok.org/mavenrepo</url>
-		</repository>
-	</repositories>
-	-->
+	<!-- comentado porque ja existe no SpringBoot <repositories> <repository> 
+		<id>projectlombok.org</id> <url>http://projectlombok.org/mavenrepo</url> 
+		</repository> </repositories> -->
 
 	<build>
 		<plugins>
