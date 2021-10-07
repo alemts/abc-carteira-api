@@ -40,7 +40,7 @@ public class Transacao {
     @Enumerated(EnumType.STRING)
     private TipoTransacao tipo;
     
-    @ManyToOne
-    //@JoinColumn(name = "id_usuario")
+    @ManyToOne //cria no padrao: usuario_id.  
+    //@JoinColumn(name = "id_usuario") //Define o nome da coluna
     private Usuario usuario;
 }

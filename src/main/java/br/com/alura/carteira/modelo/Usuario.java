@@ -12,9 +12,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter @Setter
+@Getter 
+@Setter
 @ToString(exclude = {"senha"})
-@AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor 
+@NoArgsConstructor
 @Entity
 @Table(name = "usuarios")
 public class Usuario
