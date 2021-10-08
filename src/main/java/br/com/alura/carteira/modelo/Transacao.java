@@ -18,10 +18,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-// Lombok
-@Getter @Setter
+@Getter 
+@Setter
 @ToString(exclude = {"data", "quantidade", "tipo"})
-@AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "transacoes")
 public class Transacao {
@@ -39,8 +40,9 @@ public class Transacao {
 
     @Enumerated(EnumType.STRING)
     private TipoTransacao tipo;
-    
-    @ManyToOne //cria no padrao: usuario_id.  
+
     //@JoinColumn(name = "id_usuario") //Define o nome da coluna
+    //@ManyToOne = cria no padrao: usuario_id.
+    @ManyToOne   
     private Usuario usuario;
 }

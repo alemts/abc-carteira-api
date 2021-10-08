@@ -1,12 +1,10 @@
 package br.com.alura.carteira.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
-import br.com.alura.carteira.modelo.Transacao;
+import br.com.alura.carteira.service.TransacaoService;
 
 //@Controller // @WebServlet quem gerenciava era o Tomcat
 @RestController // Evita o ResponseBody nos metodos
@@ -53,8 +51,13 @@ public class TransacaoController
      */
 
     // Versao 3: **********************************************
-    private List<Transacao> transacoes = new ArrayList<>();
-    private ModelMapper modelMapper = new ModelMapper();
+    //private List<Transacao> transacoes = new ArrayList<>();
+    //private ModelMapper modelMapper = new ModelMapper();
+    
+    //Versao 4:
+    @Autowired
+    private TransacaoService service;
+    
 
     @GetMapping
     public List<TransacaoDto> listar()
@@ -87,10 +90,12 @@ public class TransacaoController
         
         // Usando o ModelMapper:
         //ModelMapper modelMapper = new ModelMapper(); colocando como atributo da classe
-        return transacoes
-                .stream()
-                .map(t -> modelMapper.map(t, TransacaoDto.class))
-                .collect(Collectors.toList());
+        //ou
+//        return transacoes
+//                .stream()
+//                .map(t -> modelMapper.map(t, TransacaoDto.class))
+//                .collect(Collectors.toList());
+        return service.listar();
     }
 
     // Com o @Valid e as anotações de validacao do Spring nao ha nec de validacao com if..else..
@@ -106,8 +111,10 @@ public class TransacaoController
         
         // Usando o ModelMapper:
         //ModelMapper modelMapper = new ModelMapper(); colocando como atributo da classe
-        Transacao transacao = modelMapper.map(dto, Transacao.class);
-            
-        transacoes.add(transacao);
+        //ou
+//        Transacao transacao = modelMapper.map(dto, Transacao.class);
+//            
+//        transacoes.add(transacao);
+        service.cadastrar(dto);
     }
 }
