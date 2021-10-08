@@ -13,11 +13,9 @@ import br.com.alura.carteira.dto.UsuarioFormDto;
 import br.com.alura.carteira.modelo.Usuario;
 import br.com.alura.carteira.repository.UsuarioRepository;
 
-// Desse jeito o Spring consegue injetar a classe UsuarioService no Controller
 @Service
-public class UsuarioService
-{
-    //private List<Usuario> usuarios = new ArrayList<>();
+public class UsuarioService {
+    
     @Autowired
     private UsuarioRepository usuarioRepository;
     private ModelMapper modelMapper = new ModelMapper();
@@ -33,8 +31,6 @@ public class UsuarioService
         String senha = new Random().nextInt(999999) + "";
         usuario.setSenha(senha);
         
-        //System.out.println(usuario.getSenha());
-        //usuarios.add(usuario);
         usuarioRepository.save(usuario);
     }
 

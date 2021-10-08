@@ -12,12 +12,9 @@ import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.modelo.Transacao;
 import br.com.alura.carteira.repository.TransacaoRepository;
 
-
-
 @Service
-public class TransacaoService
-{
-    //private List<Transacao> transacoes = new ArrayList<>();
+public class TransacaoService {
+
     @Autowired
     private TransacaoRepository transacaoRepository;
     private ModelMapper modelMapper = new ModelMapper();
@@ -29,7 +26,6 @@ public class TransacaoService
 
     public void cadastrar(TransacaoFormDto dto) {
         Transacao transacao = modelMapper.map(dto, Transacao.class);
-        //transacoes.add(transacao);
         transacaoRepository.save(transacao);
     }
 
