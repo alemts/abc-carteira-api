@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -22,7 +23,7 @@ public class TransacaoFormDto
     @NotNull
     @NotEmpty
     @Size(min=5, max = 6)
-    @Pattern(regexp = "[A-Z]{4}[0-9][0-9]?")
+    @Pattern(regexp = "[a-zA-Z]{4}[0-9][0-9]?", message = "{transacao.ticker.invalido}")
     private String ticker;
     
     @NotNull @DecimalMin("0.01")
@@ -33,6 +34,7 @@ public class TransacaoFormDto
     private LocalDate data;
 
     @NotNull
+    @Min(1)
     private Integer quantidade;
     
     @NotNull
