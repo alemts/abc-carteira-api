@@ -22,30 +22,19 @@ import br.com.alura.carteira.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UsuarioController
-{
-    // private List<Usuario> usuarios = new ArrayList<>();
-    // private ModelMapper modelMapper = new ModelMapper();
-
-    // Injecao de dependencias: instancia da classe gerenciada pelo spring
+public class UsuarioController {
     @Autowired
     private UsuarioService service;
 
     @GetMapping
-    public Page<UsuarioDto> listar(@PageableDefault(size=5) Pageable paginacao) {
+    public Page<UsuarioDto> listar(@PageableDefault(size = 5) Pageable paginacao) {
         return service.listar(paginacao);
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioFormDto dto,
-            UriComponentsBuilder uriBuilder) {
-        UsuarioDto usuarioDto = service.cadastrar(dto);
-        
-        URI uri = uriBuilder
-                .path("/usuarios/{id}")
-                .buildAndExpand(usuarioDto.getId())
-                .toUri();
-
-        return ResponseEntity.created(uri).body(usuarioDto);
+    public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioFormDto dto, UriComponentsBuilder uriBuilder) {
+        UsuarioDto cadastrado = service.cadastrar(dto);
+        URI endereco = uriBuilder.path("/usuarios/{id}").buildAndExpand(cadastrado.getId()).toUri();
+        return ResponseEntity.created(endereco).body(cadastrado);
     }
 }
