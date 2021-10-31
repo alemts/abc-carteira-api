@@ -19,19 +19,24 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.alura.carteira.dto.UsuarioDto;
 import br.com.alura.carteira.dto.UsuarioFormDto;
 import br.com.alura.carteira.service.UsuarioService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/usuarios")
+@Api(tags = "Usuario")
 public class UsuarioController {
     @Autowired
     private UsuarioService service;
 
     @GetMapping
+    @ApiOperation("Listar usuarios")
     public Page<UsuarioDto> listar(@PageableDefault(size = 5) Pageable paginacao) {
         return service.listar(paginacao);
     }
 
     @PostMapping
+    @ApiOperation("Cadastrar usuario")
     public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioFormDto dto, UriComponentsBuilder uriBuilder) {
         UsuarioDto cadastrado = service.cadastrar(dto);
         URI endereco = uriBuilder.path("/usuarios/{id}").buildAndExpand(cadastrado.getId()).toUri();
