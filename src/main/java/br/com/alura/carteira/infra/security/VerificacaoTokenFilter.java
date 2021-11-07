@@ -37,12 +37,14 @@ public class VerificacaoTokenFilter extends OncePerRequestFilter {
         }
         
         token = token.replace("Bearer ", "");
-        if( tokenService.isValido(token)) {
+        if( tokenService.isValido(token) ) {
             Long idUsuario = tokenService.extrairIdUsuario(token);
-            Usuario logado = usuarioRepository.getById(idUsuario);
-            Authentication authentication =  
+            //Usuario logado = usuarioRepository.getById(idUsuario);
+            //Usuario logado = usuarioRepository.findById(idUsuario).get();
+            Usuario logado = usuarioRepository.carregarPorIdComPerfis(idUsuario).get();
+            Authentication authentication =
                     new UsernamePasswordAuthenticationToken(
-                            logado, null, null);
+                            logado, null, logado.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             filterChain.doFilter(request, response);

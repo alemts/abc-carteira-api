@@ -31,7 +31,7 @@ public class UsuarioController {
 
     @GetMapping
     @ApiOperation("Listar usuarios")
-    public Page<UsuarioDto> listar(@PageableDefault(size = 5) Pageable paginacao) {
+    public Page<UsuarioDto> listar(@PageableDefault(size = 15) Pageable paginacao) {
         return service.listar(paginacao);
     }
 
