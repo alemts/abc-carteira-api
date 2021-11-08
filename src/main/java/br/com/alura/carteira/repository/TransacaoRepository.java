@@ -2,11 +2,14 @@ package br.com.alura.carteira.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import br.com.alura.carteira.dto.ItemCarteiraDto;
 import br.com.alura.carteira.modelo.Transacao;
+import br.com.alura.carteira.modelo.Usuario;
 
 // Nao precisa criar uma classe q implementa esta interface,
 // o proprio Spring gera. Alem disso, por ser uma interface 
@@ -28,5 +31,7 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
            "    FROM Transacao t                                " +
            "GROUP BY t.ticker                                   ")
     List<ItemCarteiraDto> relatorioCarteiraDeInvestimentos();
+
+    Page<Transacao> findAllByUsuario(Pageable paginacao, Usuario usuario);
 
 }
