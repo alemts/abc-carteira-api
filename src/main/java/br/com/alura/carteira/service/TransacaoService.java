@@ -1,5 +1,7 @@
 package br.com.alura.carteira.service;
 
+import java.math.BigDecimal;
+
 import javax.persistence.EntityNotFoundException;
 
 import org.modelmapper.ModelMapper;
@@ -30,11 +32,32 @@ public class TransacaoService {
 
     @Autowired
     private ModelMapper modelMapper;
+    
+    @Autowired
+    private CalculadoraDeImpostoService calculadoraDeImpostoService;
 
     public Page<TransacaoDto> listar(Pageable paginacao, Usuario logado) {
-        return transacaoRepository
-                .findAllByUsuario(paginacao, logado)
-                .map(t -> modelMapper.map(t, TransacaoDto.class));
+      return transacaoRepository
+              .findAllByUsuario(paginacao, logado)
+              .map(t -> modelMapper.map(t, TransacaoDto.class));
+        
+//Versao sem a coluna imposto no BD: Imposto calculado para cada transacao
+//        Page<Transacao> transacoes = transacaoRepository
+//                .findAllByUsuario(paginacao, logado); 
+//        
+//        List<TransacaoDto> transacoesDto = new ArrayList<>();
+//        transacoes.forEach(transacao -> {
+//            BigDecimal imposto = calculadoraDeImpostoService.calcular(transacao);
+//            TransacaoDto dto = modelMapper.map(transacao, TransacaoDto.class);
+//            dto.setImposto(imposto);
+//            transacoesDto.add(dto);
+//        });
+//        
+//        return new PageImpl<TransacaoDto>(
+//                transacoesDto,
+//                transacoes.getPageable(),
+//                transacoes.getTotalElements()
+//                );        
     }
 
     @Transactional
@@ -48,6 +71,8 @@ public class TransacaoService {
             Transacao transacao = modelMapper.map(dto, Transacao.class);
             transacao.setId(null);
             transacao.setUsuario(usuario);
+            BigDecimal imposto = calculadoraDeImpostoService.calcular(transacao);
+            transacao.setImposto(imposto);
 
             transacaoRepository.save(transacao);
 

@@ -27,26 +27,32 @@ import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.modelo.Usuario;
 import br.com.alura.carteira.service.TransacaoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController // Evita o ResponseBody nos metodos
 @RequestMapping("/transacoes") // URI = endereco da requisicao
+@Api(tags = "Transacao")
 public class TransacaoController {
     
     @Autowired
     private TransacaoService service;
 
     @GetMapping
+    @ApiOperation("Listar Transacoes")
     public Page<TransacaoDto> listar(
             @PageableDefault(size = 15) Pageable paginacao, 
-            @AuthenticationPrincipal Usuario logado) {
+            @ApiIgnore @AuthenticationPrincipal Usuario logado) {
         return service.listar(paginacao, logado);
     }
 
     @PostMapping
+    @ApiOperation("Cadastrar Transacao")
     public ResponseEntity<TransacaoDto> cadastrar(
             @RequestBody @Valid TransacaoFormDto dto,
             UriComponentsBuilder uriBuilder,
-            @AuthenticationPrincipal Usuario logado) {
+            @ApiIgnore @AuthenticationPrincipal Usuario logado) {
         TransacaoDto cadastrada = service.cadastrar(dto, logado);
         URI uri = uriBuilder.path("/transacoes/{id}").buildAndExpand(cadastrada.getId()).toUri();
 
@@ -54,27 +60,30 @@ public class TransacaoController {
     }
 
     @PutMapping
+    @ApiOperation("Atualizar Transacao")
     public ResponseEntity<TransacaoDto> atualizar(
             @RequestBody @Valid AtualizacaoTransacaoFormDto dto,
-            @AuthenticationPrincipal Usuario logado ) {
+            @ApiIgnore @AuthenticationPrincipal Usuario logado ) {
         TransacaoDto atualizada = service.atualizar(dto, logado);
 
         return ResponseEntity.ok(atualizada);
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation("Remover Transacao")
     public ResponseEntity<TransacaoDto> remover(
             @PathVariable @NotNull Long id,
-            @AuthenticationPrincipal Usuario logado) {
+            @ApiIgnore @AuthenticationPrincipal Usuario logado) {
         service.remover(id, logado);
 
         return ResponseEntity.noContent().build();
     }
     
     @GetMapping("/{id}")
+    @ApiOperation("Detalhar Transacao")
     public ResponseEntity<TransacaoDetalhadaDto> detalhar(
             @PathVariable @NotNull Long id,
-            @AuthenticationPrincipal Usuario logado) {
+            @ApiIgnore @AuthenticationPrincipal Usuario logado) {
         TransacaoDetalhadaDto dto = service.detalhar(id, logado);
         return ResponseEntity.ok(dto); //ok(param) passando param ele faz o build auto//
     }

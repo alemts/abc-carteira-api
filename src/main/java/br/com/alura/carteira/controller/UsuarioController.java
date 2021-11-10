@@ -30,13 +30,13 @@ public class UsuarioController {
     private UsuarioService service;
 
     @GetMapping
-    @ApiOperation("Listar usuarios")
+    @ApiOperation("Listar Usuarios")
     public Page<UsuarioDto> listar(@PageableDefault(size = 15) Pageable paginacao) {
         return service.listar(paginacao);
     }
 
     @PostMapping
-    @ApiOperation("Cadastrar usuario")
+    @ApiOperation("Cadastrar Usuario")
     public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioFormDto dto, UriComponentsBuilder uriBuilder) {
         UsuarioDto cadastrado = service.cadastrar(dto);
         URI endereco = uriBuilder.path("/usuarios/{id}").buildAndExpand(cadastrado.getId()).toUri();

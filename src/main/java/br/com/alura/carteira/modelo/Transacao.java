@@ -47,6 +47,8 @@ public class Transacao {
     //@ManyToOne = cria no padrao: usuario_id.
     @ManyToOne
     private Usuario usuario;
+    
+    private BigDecimal imposto;
 
     public Transacao(String ticker, BigDecimal preco, Integer quantidade, 
             LocalDate data, TipoTransacao tipo, Usuario usuario) {
