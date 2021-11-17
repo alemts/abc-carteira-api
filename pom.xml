@@ -112,6 +112,7 @@
 		</repository> </repositories> -->
 
 	<build>
+        <finalName>CarteiraDeInvestimentos</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
