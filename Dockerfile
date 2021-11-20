@@ -6,4 +6,4 @@ COPY target/*.jar /app/CarteiraDeInvestimentos.jar
 
 EXPOSE 8080
 
-CMD java -XX:+UseContainerSupport -jar CarteiraDeInvestimentos.jar
+CMD java -XX:+UseContainerSupport -Xmx512m -Dserver.port=${PORT} -jar CarteiraDeInvestimentos.jar
