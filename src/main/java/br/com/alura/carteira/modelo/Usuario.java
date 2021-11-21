@@ -38,6 +38,7 @@ public class Usuario implements UserDetails {
     private String nome;
     private String login;
     private String senha;
+    private String email;
     
     /* Um Usuario pode ter         muitos perfis
      * Um Perfil  pode pertencer a muitos usuarios */

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.alura.carteira.dto.UsuarioDto;
 import br.com.alura.carteira.dto.UsuarioFormDto;
+import br.com.alura.carteira.infra.EnviadorDeEmail;
 import br.com.alura.carteira.modelo.Perfil;
 import br.com.alura.carteira.modelo.Usuario;
 import br.com.alura.carteira.repository.PerfilRepository;
@@ -32,6 +33,9 @@ public class UsuarioService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     
+    @Autowired
+    private EnviadorDeEmail enviadorDeEmail;
+    
     public Page<UsuarioDto> listar(Pageable paginacao) {
         Page<Usuario> usuarios = usuarioRepository.findAll(paginacao);
         return usuarios.map(t -> modelMapper.map(t, UsuarioDto.class));
@@ -50,7 +54,23 @@ public class UsuarioService {
         
         usuarioRepository.save(usuario);
         
+        enviarEmailCredencial(usuario, senha);
+        
         return modelMapper.map(usuario, UsuarioDto.class);
+    }
+
+    private void enviarEmailCredencial(Usuario usuario, String senhaDescriptografada) {
+        String destinatario = usuario.getEmail();
+        String assunto = "Carteira - Bem-vindo(a)";
+        //TODO: Formatar email com Thymeleaf
+        String mensagem = String.format(
+                "Olá %s!\n\n" +
+                "Seguem seus dados de acesso ao sistema Carteira:\n" +
+                "Login: %s\n" +
+                "Senha: %s", 
+                usuario.getNome(), usuario.getLogin(), senhaDescriptografada);
+        
+        enviadorDeEmail.enviarEmail(destinatario, assunto, mensagem);        
     }
 
 }
