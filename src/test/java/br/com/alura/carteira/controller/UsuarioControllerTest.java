@@ -82,12 +82,13 @@ class UsuarioControllerTest {
     @Test
     void deveriaCadastrarUsuarioComDadosCompletos() throws Exception {
         // Envia obj UsuarioFormDto em formato Json
-        String json    = "{ \"nome\"     :\"Fulano\",           " +
-                         "  \"login\"    :\"fulano@email.com\", " +
+        String json    = "{ \"nome\"     :\"Fulano de Tal\",    " +
+                         "  \"login\"    :\"fulano\",           " +
+                         "  \"email\"    :\"fulano@email.com\", " +
                          "  \"perfilId\" :1 }";
 
         // Recebe em formato Json a representacao do obj UsuarioDto
-        String jsonRet = "{\"nome\":\"Fulano\",\"login\":\"fulano@email.com\"}";
+        String jsonRet = "{\"nome\":\"Fulano de Tal\",\"login\":\"fulano\"}";
 
         mvc
         .perform(
